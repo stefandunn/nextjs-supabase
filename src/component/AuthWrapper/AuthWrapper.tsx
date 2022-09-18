@@ -73,7 +73,7 @@ const AuthWrapper: FC<AuthWrapperProps> = ({
       }
       if (shouldRedirectBackBasedOnAuth || shouldRedirectAsGuest) {
         if (shouldRedirectBackBasedOnAuth) {
-          router.back();
+          await router.replace("/");
         }
         if (shouldRedirectAsGuest) {
           await router.replace("/login");
