@@ -8,8 +8,9 @@ This repo is a starter-kit for setting up a NextJS app with Supabase with the fo
 
 The following packages are installed as part of this starter-kit:
 
-- `lodash`
-- `immer`
+- `lodash` - Util methods
+- `immer` - Immutable object manipulation
+- `recoiljs` - Global state management
 
 The following modifications have been made:
 
