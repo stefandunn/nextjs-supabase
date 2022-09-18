@@ -46,7 +46,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ### Guest routes
 
-To set up which routes are `guest` accessible (i.e, not requiring an authorised account to access), you can populate the `guestRoutes` prop to `AuthWrapper`. The values in the array should contain trailing slashes to match the path values returned from NextJS router object. You can also use glob patterns like `/terms/*` to match `/terms/refunds/` and `/terms/delivery` etc for example.
+To set up which routes are `guest` accessible (i.e, not requiring an authenticated user to access), you can populate the `guestRoutes` prop to `AuthWrapper`. The values in the array should contain trailing slashes to match the path values returned from NextJS router object. You can also use glob patterns like `/terms/*` to match `/terms/refunds/` and `/terms/delivery` etc for example.
 
 ```
 const guestRoutes = [
