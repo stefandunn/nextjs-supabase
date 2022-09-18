@@ -19,7 +19,7 @@ const Logout: NextPage = () => {
         router.push("/login");
       }
     });
-  }, [router]);
+  }, [router, setUser]);
 
   return null;
 };
