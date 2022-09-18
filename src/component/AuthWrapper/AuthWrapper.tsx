@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FC, memo, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { UserState } from "../../global-states/auth.state";
 import { auth } from "../../supabase";
@@ -15,7 +15,6 @@ const AuthWrapper: FC<AuthWrapperProps> = ({
   const router = useRouter();
   const [user, setUser] = useRecoilState(UserState);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isRedirecting, setIsRedirecting] = useState<boolean>(true);
   const userChecking = useRef<boolean>(false);
   const timeout = useRef<Timeout>(null);
 
@@ -49,7 +48,6 @@ const AuthWrapper: FC<AuthWrapperProps> = ({
 
     return matchedRoute;
   };
-
   const isGuestRoute = belongsInRoute(guestRoutes);
   const isRedirectIfAuthedRoute = belongsInRoute(redirectIfAuthedRoutes);
 
@@ -66,18 +64,12 @@ const AuthWrapper: FC<AuthWrapperProps> = ({
       }
       if (shouldRedirectBackBasedOnAuth || shouldRedirectAsGuest) {
         if (shouldRedirectBackBasedOnAuth) {
-          await router.replace("/");
+          router.replace("/");
         }
         if (shouldRedirectAsGuest) {
-          await router.replace("/login");
+          router.replace("/login");
         }
       }
-      // Prevent flash in browser
-      timeout.current = setTimeout(() => {
-        if (mounted) {
-          setIsRedirecting(false);
-        }
-      }, 250);
     };
 
     authCheck();
@@ -87,11 +79,11 @@ const AuthWrapper: FC<AuthWrapperProps> = ({
     };
   }, [router, shouldRedirectBackBasedOnAuth, shouldRedirectAsGuest]);
 
-  if (loading || isRedirecting) {
+  if (loading || (!isGuestRoute && !user)) {
     return null;
   }
 
   return <>{children}</>;
 };
 
-export default memo(AuthWrapper);
+export default AuthWrapper;
