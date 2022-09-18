@@ -3,7 +3,7 @@ import { RecoilRoot } from "recoil";
 import { AuthWrapper } from "../component/AuthWrapper";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const guestRoutes = ["/login", "/signup"];
+  const guestRoutes = ["/login/", "/signup/"];
 
   return (
     <RecoilRoot>

@@ -11,6 +11,7 @@ The following packages are installed as part of this starter-kit:
 - `lodash` - Util methods
 - `immer` - Immutable object manipulation
 - `recoiljs` - Global state management
+- `wildcard-match` - For wildcard route matching
 
 The following modifications have been made:
 

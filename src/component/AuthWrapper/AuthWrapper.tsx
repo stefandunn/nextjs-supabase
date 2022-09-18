@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, memo, useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { UserState } from "../../global-states/auth.state";
 import { auth } from "../../supabase";
 import { Timeout } from "../../types/window.types";
 import { AuthWrapperProps } from "./AuthWrapper.types";
+import globMatch from "wildcard-match";
 
 const AuthWrapper: FC<AuthWrapperProps> = ({
   children,
@@ -36,29 +37,21 @@ const AuthWrapper: FC<AuthWrapperProps> = ({
     }
   }, [setUser]);
 
-  const isGuestRoute = useMemo(() => {
-    let guestRoute = false;
+  const belongsInRoute = (routes: string[]) => {
+    let matchedRoute = false;
     const path = router.asPath;
-    guestRoutes.forEach((route) => {
-      if (path === route) {
-        guestRoute = true;
+    routes.forEach((route) => {
+      const routeMatch = globMatch(route);
+      if (routeMatch(path) || path === route) {
+        matchedRoute = true;
       }
     });
 
-    return guestRoute;
-  }, [router, guestRoutes]);
+    return matchedRoute;
+  };
 
-  const isRedirectIfAuthedRoute = useMemo(() => {
-    let authRoute = false;
-    const path = router.asPath;
-    redirectIfAuthedRoutes.forEach((route) => {
-      if (path === route) {
-        authRoute = true;
-      }
-    });
-
-    return authRoute;
-  }, [router, redirectIfAuthedRoutes]);
+  const isGuestRoute = belongsInRoute(guestRoutes);
+  const isRedirectIfAuthedRoute = belongsInRoute(redirectIfAuthedRoutes);
 
   const shouldRedirectBackBasedOnAuth =
     isRedirectIfAuthedRoute && !loading && user;
@@ -101,4 +94,4 @@ const AuthWrapper: FC<AuthWrapperProps> = ({
   return <>{children}</>;
 };
 
-export default AuthWrapper;
+export default memo(AuthWrapper);
