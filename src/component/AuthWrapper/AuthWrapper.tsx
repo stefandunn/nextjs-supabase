@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { FC, memo, useEffect, useMemo, useRef, useState } from "react";
+import { FC, memo, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { UserState } from "../../global-states/auth.state";
 import { auth } from "../../supabase";
